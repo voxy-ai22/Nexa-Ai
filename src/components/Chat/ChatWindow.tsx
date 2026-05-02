@@ -416,18 +416,18 @@ export default function ChatWindow({currentUser, onLogout}: ChatProps) {
             )}
             
             {isLoading && (
-              <motion.div initial={{opacity: 0}} animate={{opacity: 1}} className="flex justify-start">
-                <div className="flex gap-4 items-start">
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gold">
-                      <RefreshCcw className="w-5 h-5 animate-spin-slow" />
+              <motion.div initial={{opacity: 0}} animate={{opacity: 1}} className="flex justify-start w-full">
+                <div className="flex gap-4 items-start w-full">
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gold shrink-0">
+                      <Sparkles className="w-5 h-5 animate-pulse" />
                     </div>
-                    <div className="glass-dark px-6 py-4 rounded-2xl flex items-center gap-2">
-                      <div className="flex gap-1.5">
-                        <div className="w-1.5 h-1.5 rounded-full bg-gold animate-bounce" style={{animationDelay: '0ms'}} />
-                        <div className="w-1.5 h-1.5 rounded-full bg-gold animate-bounce" style={{animationDelay: '150ms'}} />
-                        <div className="w-1.5 h-1.5 rounded-full bg-gold animate-bounce" style={{animationDelay: '300ms'}} />
+                    <div className="glass-dark px-6 py-4 rounded-2xl flex items-center gap-3">
+                      <div className="flex gap-1">
+                        <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1 }} className="w-1.5 h-1.5 rounded-full bg-gold" />
+                        <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1, delay: 0.2 }} className="w-1.5 h-1.5 rounded-full bg-gold" />
+                        <motion.div animate={{ opacity: [0.4, 1, 0.4] }} transition={{ repeat: Infinity, duration: 1, delay: 0.4 }} className="w-1.5 h-1.5 rounded-full bg-gold" />
                       </div>
-                      <span className="text-xs font-bold text-gold/60 uppercase tracking-widest">Mencari jawaban...</span>
+                      <span className="text-xs font-bold text-gold/60 uppercase tracking-widest">Nexa AI sedang mengetik...</span>
                     </div>
                 </div>
               </motion.div>

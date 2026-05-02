@@ -94,89 +94,108 @@ export default function Auth({onLogin}: {onLogin: (username: string) => void}) {
           <div className="absolute bottom-1/4 left-0 w-72 h-72 bg-blue-500/5 blur-[120px] rounded-full" />
         </div>
 
-        <motion.div
-          initial={{opacity: 0, x: 20}}
-          animate={{opacity: 1, x: 0}}
-          className="w-full max-w-md relative z-10"
-        >
-          <div className="mb-10 lg:hidden text-center">
-            <h2 className="text-3xl font-black text-white tracking-tight">NEXA AI</h2>
-          </div>
-
-          <div className="mb-8">
-            <h2 className="text-4xl font-bold font-sans tracking-tight text-white mb-3">
-              {isLogin ? 'Gerbang Masuk' : 'Pendaftaran'}
-            </h2>
-            <p className="text-sacred-white/40 font-medium">
-              {isLogin ? 'Masuk ke dalam ekosistem kecerdasan Nexa AI' : 'Buat akun aman Anda di dalam jaringan Nexa AI'}
-            </p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="space-y-5">
-            {error && (
-              <motion.div 
-                initial={{opacity: 0, scale: 0.95}} 
-                animate={{opacity: 1, scale: 1}}
-                className="bg-red-500/10 border border-red-500/20 text-red-500 p-4 rounded-2xl text-sm font-bold flex items-center gap-3"
-              >
-                <div className="w-1 h-1 rounded-full bg-red-500" />
-                {error}
-              </motion.div>
-            )}
-
-            <div className="space-y-4">
-              <div className="relative group">
-                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 group-focus-within:text-gold transition-colors" />
-                <input
-                  type="text"
-                  placeholder="Nama Pengguna / Identitas"
-                  className="w-full glass-input py-4 pl-12 pr-4 rounded-2xl text-white font-sans text-sm"
-                  value={username}
-                  onChange={(e) => {
-                    setUsername(e.target.value);
-                    setError('');
-                  }}
-                />
-              </div>
-
-              <div className="relative group">
-                <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 group-focus-within:text-gold transition-colors" />
-                <input
-                  type="password"
-                  placeholder="Kata Sandi Rahasia"
-                  className="w-full glass-input py-4 pl-12 pr-4 rounded-2xl text-white font-sans text-sm"
-                  value={password}
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                    setError('');
-                  }}
-                />
-              </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={isLogin ? 'login' : 'register'}
+            initial={{opacity: 0, x: 20}}
+            animate={{opacity: 1, x: 0}}
+            exit={{opacity: 0, x: -20}}
+            transition={{duration: 0.3}}
+            className="w-full max-w-md relative z-10"
+          >
+            <div className="mb-10 lg:hidden text-center">
+              <span className="text-sm font-black text-gold tracking-[0.3em] uppercase">Nexa Intelligence</span>
             </div>
 
-            <button
-              type="submit"
-              className="w-full bg-gold hover:bg-gold/90 text-sacred-blue font-black py-4 rounded-2xl flex items-center justify-center gap-2 transition-all transform hover:scale-[1.01] active:scale-95 group shadow-2xl shadow-gold/20 tracking-widest text-sm uppercase"
-            >
-              {isLogin ? 'AUTENTIKASI' : 'INISIALISASI'}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </button>
-          </form>
+            <div className="mb-10">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="flex items-center gap-2 mb-2"
+              >
+                <div className="w-8 h-[1px] bg-gold/50" />
+                <span className="text-[10px] font-black text-gold tracking-[0.3em] uppercase">Sistem Inisialisasi</span>
+              </motion.div>
+              <h2 className="text-5xl font-black font-sans tracking-tighter text-white mb-3">
+                {isLogin ? 'AKSES' : 'DAFTAR'} <span className="text-gold/80 italic">PORTAL</span>
+              </h2>
+              <p className="text-sacred-white/40 font-medium leading-relaxed">
+                {isLogin ? 'Silakan autentikasi identitas Anda untuk masuk ke dalam ekosistem kecerdasan Nexa AI.' : 'Bangun jangkar aman Anda di dalam jaringan saraf Nexa AI untuk mulai berevolusi.'}
+              </p>
+            </div>
 
-          <div className="mt-10 text-center">
-            <button
-              onClick={() => {
-                setIsLogin(!isLogin);
-                setError('');
-              }}
-              className="group flex items-center justify-center gap-2 w-full text-sacred-white/40 hover:text-white transition-all text-xs font-bold tracking-[0.2em] uppercase"
-            >
-              <div className="h-[1px] w-8 bg-white/10 group-hover:bg-gold/50 transition-colors" />
-              {isLogin ? "Daftar Akun Baru" : "Sudah Punya Akun"}
-              <div className="h-[1px] w-8 bg-white/10 group-hover:bg-gold/50 transition-colors" />
-            </button>
-          </div>
-        </motion.div>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {error && (
+                <motion.div 
+                  initial={{opacity: 0, scale: 0.95}} 
+                  animate={{opacity: 1, scale: 1}}
+                  className="bg-red-500/5 border border-red-500/20 text-red-400 p-4 rounded-2xl text-xs font-bold flex items-center gap-3 backdrop-blur-md"
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                  {error}
+                </motion.div>
+              )}
+
+              <div className="space-y-4">
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gold/5 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none" />
+                  <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 group-focus-within:text-gold transition-all duration-300" />
+                  <input
+                    type="text"
+                    placeholder="Identitas Pengguna"
+                    className="w-full glass-input py-4 pl-12 pr-4 rounded-2xl text-white font-sans text-sm border-white/5 hover:border-white/10"
+                    value={username}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                      setError('');
+                    }}
+                  />
+                </div>
+
+                <div className="relative group">
+                  <div className="absolute inset-0 bg-gold/5 blur-xl opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none" />
+                  <Lock className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/30 group-focus-within:text-gold transition-all duration-300" />
+                  <input
+                    type="password"
+                    placeholder="Kata Sandi Rahasia"
+                    className="w-full glass-input py-4 pl-12 pr-4 rounded-2xl text-white font-sans text-sm border-white/5 hover:border-white/10"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setError('');
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="relative group overflow-hidden rounded-2xl">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out pointer-events-none" />
+                <button
+                  type="submit"
+                  className="w-full bg-gold hover:bg-gold/90 text-sacred-blue font-black py-4 flex items-center justify-center gap-2 transition-all transform active:scale-95 shadow-2xl shadow-gold/20 tracking-[0.2em] text-xs uppercase"
+                >
+                  {isLogin ? 'MASUK KE NEXA' : 'INISIASI AKUN'}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </div>
+            </form>
+
+            <div className="mt-12 text-center">
+              <button
+                onClick={() => {
+                  setIsLogin(!isLogin);
+                  setError('');
+                }}
+                className="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden"
+              >
+                <span className="relative z-10 text-sacred-white/30 group-hover:text-gold transition-colors text-[10px] font-black tracking-[0.3em] uppercase">
+                  {isLogin ? "Belum Memiliki Akses? Daftar" : "Sudah Terdaftar? Autentikasi"}
+                </span>
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[1px] bg-gold/50 group-hover:w-full transition-all duration-300" />
+              </button>
+            </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );
